@@ -1,9 +1,5 @@
-# Filename:                     cisco-automation-tutorial.py
-# Command to run the program:   python cisco-automation-tutorial.py
-
 # Import the required dependencies
 from ncclient import manager
-import sys
 from argparse import ArgumentParser
 import xml.dom.minidom
 
@@ -37,7 +33,7 @@ interface_filter = '''
 
 
 
-# Execute the get-config RPC
+# Execute the get-config
 result = m.get_config('running', interface_filter)
 xmlDom = xml.dom.minidom.parseString( str( m.get_config('running', interface_filter)))
 print(xmlDom.toprettyxml( indent = "  " ))
