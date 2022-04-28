@@ -1,0 +1,89 @@
+module interface {
+
+    yang-version 1.1;
+    namespace "http://challange.telia.com/interface";
+    prefix interface;
+
+
+    description
+      "Interface Yang Model";
+
+    revision 2022-04-28 {
+        description
+          "Initial revision.";
+    }
+
+    list interface {
+        key "intf-type intf-id subint";
+
+
+        leaf intf-type {
+            type enumeration {
+                enum FastEthernet;
+                enum GigabitEthernet;
+                enum TenGigabitEthernet;
+            }
+        }
+
+        leaf intf-id {
+            type string {
+                pattern
+                  "[0-9]/[0-9]";
+            }
+        }
+
+        leaf subint {
+            type uint16 {
+                range "1..4094";
+            }
+        }
+
+        container encapsulation {
+
+            choice encapsulation-type {
+                mandatory true;
+                case default {
+                    leaf default {
+                        type empty;
+                    }
+                }
+                case dot1q {
+                    leaf dot1q {
+                        type uint16 {
+                            range "1..4094";
+                        }
+                    }
+                }
+            }
+        }
+
+        leaf description {
+            type string;
+            mandatory true;
+        }
+
+        leaf mtu {
+            type uint16 {
+                range "1500..9216";
+            }
+            mandatory true;
+        }
+
+        list service-policy {
+            key "direction profile";
+
+            min-elements 1;
+
+            leaf direction {
+                type enumeration {
+                    enum input;
+                    enum output;
+                }
+            }
+
+            leaf profile {
+                type string;
+            }
+        }
+    }
+}
