@@ -1,0 +1,22 @@
+{#Check if subinterface or not#}
+{% if dict_item["subint"] is defined %}
+{% set result = ('.'+dict_item['subint']|string) %}
+{% else %}
+{% set result = "" %}
+{% endif %}
+
+{#Create the output#}
+interface {{ dict_item['intf-type'] }}{{ dict_item['intf-id'] }}{{result}}
+{#Check if encapsulation is default or dot1q#}
+{% if dict_item["encap"] == "default" %}
+ encapsulation default
+{% else %}
+ encapsulation dot1q {{ dict_item["encap"] }}
+{% endif %}
+ description {{ '"'+dict_item['description']+'"' }}
+ mtu {{ dict_item['mtu'] }}
+{#In case of multiple service-policy entered#}
+{% for service_policy_dict in dict_item['service-policy'] %}
+ service-policy {{ service_policy_dict['direction'] }} {{ service_policy_dict['name'] }}
+{% endfor %}
+!
