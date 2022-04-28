@@ -15,7 +15,7 @@ interface {{ dict_item['intf-type'] }}{{ dict_item['intf-id'] }}{{result}}
 {% endif %}
  description {{ '"'+dict_item['description']+'"' }}
  mtu {{ dict_item['mtu'] }}
-{#In case of multiple service-policy entered#}
+{#In case of multiple service-policy entered. Can be in or out#}
 {% for service_policy_dict in dict_item['service-policy'] %}
  service-policy {{ service_policy_dict['direction'] }} {{ service_policy_dict['name'] }}
 {% endfor %}
